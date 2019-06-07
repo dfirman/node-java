@@ -106,43 +106,17 @@
             'xcode_settings': {
               'OTHER_CFLAGS': ['-O3'],
             },
-            'conditions': [
-              ['javaver=="Library"',
-                {
-                  'include_dirs': [
-                    '<(javahome)/include',
-                    '<(javahome)/include/darwin'
-                  ],
-                  'libraries': [
-                    '-L<(javalibdir)',
-                    '-Wl,-rpath,<(javalibdir)',
-                    '-ljli'
-                  ],
-                },
-              ],
-              ['javaver=="System"',
-                {
-                  'include_dirs': [
-                    '/System/Library/Frameworks/JavaVM.framework/Headers'
-                  ],
-                  'libraries': [
-                    '-framework JavaVM'
-                  ],
-                },
-              ],
-              ['javaver==""',
-                {
-                  'include_dirs': [
-                    '/System/Library/Frameworks/JavaVM.framework/Headers'
-                  ],
-                  'libraries': [
-                    '-framework JavaVM'
-                  ],
-                },
-              ],
+            'include_dirs': [
+              '<(javahome)/include',
+              '<(javahome)/include/darwin'
             ],
-          },
-        ],
+            'libraries': [
+              '-L<(javalibdir)',
+              '-Wl,-rpath,<(javalibdir)',
+              '-ljli'
+            ]
+          }
+        ]
       ]
     }
   ]
