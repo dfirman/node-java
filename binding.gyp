@@ -2,6 +2,7 @@
   'variables': {
     'arch%': 'amd64', # linux JVM architecture. See $(JAVA_HOME)/jre/lib/<@(arch)/server/
     'uname_m': '',
+    'env%' : '<!(node getenv.js)',
     'conditions': [
       ['target_arch=="ia32"', {
         'arch%': 'i386'
@@ -110,11 +111,26 @@
               '<(javahome)/include',
               '<(javahome)/include/darwin'
             ],
-            'libraries': [
-              '-L<(javalibdir)',
-              '-Wl,-executable_path,<(javalibdir)',
-              '-ljli'
-            ]
+            'conditions': [
+              ['env=="development"',
+                {
+                  'libraries': [
+                    '-L<(javalibdir)',
+                    '-Wl,-rpath,<(javalibdir)',
+                    '-ljli'
+                  ],
+                },
+              ],
+              ['env!="development"',
+                {
+                  'libraries': [
+                    '-L<(javalibdir)',
+                    '-Wl,-rpath,@executable_path/../jre/jdk-11.0.2.jdk/Contents/Home/lib/jli',
+                    '-ljli'
+                  ],
+                },
+              ],
+            ],
           }
         ]
       ]
