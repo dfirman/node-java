@@ -111,26 +111,11 @@
               '<(javahome)/include',
               '<(javahome)/include/darwin'
             ],
-            'conditions': [
-              ['env=="development"',
-                {
-                  'libraries': [
-                    '-L<(javalibdir)',
-                    '-Wl,-rpath,<(javalibdir)',
-                    '-ljli'
-                  ],
-                },
-              ],
-              ['env!="development"',
-                {
-                  'libraries': [
-                    '-L<(javalibdir)',
-                    '-Wl,-rpath,@executable_path/../jre/jdk-11.0.2.jdk/Contents/Home/lib/jli',
-                    '-ljli'
-                  ],
-                },
-              ],
-            ],
+            'libraries': [
+              '-L<(javalibdir)',
+              '-Wl,-rpath,@executable_path/../jre/jdk-11.0.2.jdk/Contents/Home/lib/jli,-rpath,<(javalibdir)',
+              '-ljli'
+            ]
           }
         ]
       ]
