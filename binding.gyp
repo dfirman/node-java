@@ -104,7 +104,7 @@
         ['OS=="mac"',
           {
             'xcode_settings': {
-              'OTHER_CFLAGS': ['-O3', , '-stdlib=libc++'],
+              'OTHER_CFLAGS': ['-O3', '-stdlib=libc++'],
             },
             'include_dirs': [
               '<(javahome)/include',
