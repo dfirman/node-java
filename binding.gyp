@@ -41,7 +41,6 @@
         '<(javahome)/include',
         "<!(node -e \"require('nan')\")",
       ],
-      'cflags': ['-O3', '-stdlib=libc++'],
       'conditions': [
         ['OS=="win"',
           {
@@ -104,12 +103,11 @@
         ['OS=="mac"',
           {
             'xcode_settings': {
-              'OTHER_CFLAGS': ['-O3', '-stdlib=libc++'],
+              'MACOSX_DEPLOYMENT_TARGET': '10.9',
             },
             'include_dirs': [
               '<(javahome)/include',
               '<(javahome)/include/darwin',
-              '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1'
             ],
             'libraries': [
               '-L<(javalibdir)',
