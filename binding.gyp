@@ -41,7 +41,6 @@
         '<(javahome)/include',
         "<!(node -e \"require('nan')\")",
       ],
-      'cflags': ['-O3'],
       'conditions': [
         ['OS=="win"',
           {
@@ -104,45 +103,19 @@
         ['OS=="mac"',
           {
             'xcode_settings': {
-              'OTHER_CFLAGS': ['-O3'],
+              'MACOSX_DEPLOYMENT_TARGET': '10.9',
             },
-            'conditions': [
-              ['javaver=="Library"',
-                {
-                  'include_dirs': [
-                    '<(javahome)/include',
-                    '<(javahome)/include/darwin'
-                  ],
-                  'libraries': [
-                    '-L<(javalibdir)',
-                    '-Wl,-rpath,<(javalibdir)',
-                    '-ljli'
-                  ],
-                },
-              ],
-              ['javaver=="System"',
-                {
-                  'include_dirs': [
-                    '/System/Library/Frameworks/JavaVM.framework/Headers'
-                  ],
-                  'libraries': [
-                    '-framework JavaVM'
-                  ],
-                },
-              ],
-              ['javaver==""',
-                {
-                  'include_dirs': [
-                    '/System/Library/Frameworks/JavaVM.framework/Headers'
-                  ],
-                  'libraries': [
-                    '-framework JavaVM'
-                  ],
-                },
-              ],
+            'include_dirs': [
+              '<(javahome)/include',
+              '<(javahome)/include/darwin',
             ],
-          },
-        ],
+            'libraries': [
+              '-L<(javalibdir)',
+              '-Wl,-rpath,@executable_path/../jre/jdk-11.0.2.jdk/Contents/Home/lib/jli,-rpath,<(javalibdir)',
+              '-ljli'
+            ]
+          }
+        ]
       ]
     }
   ]
