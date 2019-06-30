@@ -53,6 +53,13 @@ npm install --global --production windows-build-tools
 ```bash
 GYP_DEFINES="armv7=0" CCFLAGS='-march=armv6' CXXFLAGS='-march=armv6' npm install java
 ```
+## Packageing with Electron
+
+In order for this to run in an Electron app there must be a JRE present. The current solution is to use this [node-jre](https://www.npmjs.com/package/node-jre) module to download the jre. I do this as a step in my actually app and unzip the jre in a directory "jre" at the top level of my project (make sure to configure your package.json to include this directory). If you do this then the current set up in this repo should allow you to call Java code in a packaged electron app.
+
+TODO: What should probably happen is that this module should depend on node-jre and the library should link to the jre downloaded in this module.
+
+NOTE: only tested on Windows and MacOS
 
 ## Manual compile (Using node-gyp)
 
@@ -64,7 +71,7 @@ npm test
 
 _NOTE: You will need node-gyp installed using "npm install -g node-gyp"_
 
-On Raspian you might need a: 
+On Raspian you might need a:
 
 * sudo ln -s /usr/lib/jvm/jdk-7-oracle-arm-vfp-hflt /opt/jdk
 
@@ -393,7 +400,7 @@ java.asyncOptions = {
  * `promisify` Callback-to-promise transform implementation. From Node.js version 8 one can just use Node.js implementation: `promisify: require('util').promisify`.
  * `ifReadOnlySuffix` See [Static Member Name Conflicts](#staticMemberNameConflicts).
 
-See [Async Options](#asyncOptionsDetails) for details. 
+See [Async Options](#asyncOptionsDetails) for details.
 
 ## import
 
@@ -559,7 +566,7 @@ __Example__
 
 *java.newArray(className, values[])**
 
-Creates a new java array of given glass type. To create array of primitive types like `char`, `byte`, etc, pass the primitive type name (eg.  `java.newArray("char", "hello world\n".split(''))`). 
+Creates a new java array of given glass type. To create array of primitive types like `char`, `byte`, etc, pass the primitive type name (eg.  `java.newArray("char", "hello world\n".split(''))`).
 
 __Arguments__
 
@@ -694,7 +701,7 @@ __Example__
     var thread = java.newInstanceSync("java.lang.Thread", myProxy);
     thread.start();
 
-## isJvmCreated 
+## isJvmCreated
 
 <a name="javaisJvmCreated" >
 
