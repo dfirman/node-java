@@ -13,21 +13,28 @@ require('find-java-home')(function(err, home){
     dll = glob.sync('**/jvm.dll', {cwd: home})[0];
     dylib = glob.sync('**/libjli.dylib', {cwd: home})[0];
     soFiles = glob.sync('**/libjvm.so', {cwd: home});
-    
+
     if(soFiles.length>0)
       so = getCorrectSoForPlatform(soFiles);
 
     binary = dll || dylib || so;
-
-    fs.writeFileSync(
-      path.resolve(__dirname, './build/jvm_dll_path.json'),
-      binary
-      ? JSON.stringify(
-          path.delimiter
-          + path.dirname(path.resolve(home, binary))
-        )
-      : '""'
-    );
+    jsonfile = path.resolve(__dirname, './build/jvm_dll_path.json');
+    if(process.platform === 'win32'){
+      fs.writeFileSync(
+        jsonfile,
+        ';jre\\\\jdk-11.0.2\\\\bin\\\\server' //TODO: change this so jdk version is detected
+      );
+    } else {
+      fs.writeFileSync(
+        jsonfile,
+        binary
+        ? JSON.stringify(
+            path.delimiter
+            + path.dirname(path.resolve(home, binary))
+          )
+        : '""'
+      );
+    }
   }
 });
 
@@ -47,7 +54,7 @@ function removeDuplicateJre(filePath){
 }
 
 function _getCorrectSoForPlatform(soFiles){
-  
+
   var architectureFolderNames = {
     'ia32': 'i386',
     'x64': 'amd64'

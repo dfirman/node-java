@@ -111,7 +111,7 @@
             ],
             'libraries': [
               '-L<(javalibdir)',
-              '-Wl,-rpath,@executable_path/../jre/jdk-11.0.2.jdk/Contents/Home/lib/jli,-rpath,<(javalibdir)',
+              '-Wl,-rpath,@executable_path/../jre/jdk-11.0.2.jdk/Contents/Home/lib/jli,-rpath,<(javalibdir)', #change this so the jdk version is detected
               '-ljli'
             ]
           }
